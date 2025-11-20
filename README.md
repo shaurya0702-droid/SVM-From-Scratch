@@ -117,64 +117,6 @@ Where:
 pip install numpy pandas matplotlib seaborn
 ```
 
-### Quick Start
-
-```python
-import numpy as np
-import pandas as pd
-from svm_classifier import SVM_classifier
-
-# 1. Load and preprocess data
-df = pd.read_csv('svm_heartdataset_new_encoded.csv')
-
-# 2. Shuffle and split
-df_shuffled = df.sample(frac=1, random_state=42).reset_index(drop=True)
-train = df_shuffled.iloc[:3000]
-test = df_shuffled.iloc[3000:5628]
-
-# 3. Extract features and labels
-X_train = train.iloc[:, :-1].values
-y_train = train.iloc[:, -1].values
-X_test = test.iloc[:, :-1].values
-y_test = test.iloc[:, -1].values
-
-# 4. Feature Scaling (Standardization)
-train_mean = np.mean(X_train, axis=0)
-train_std = np.std(X_train, axis=0)
-X_train_scaled = (X_train - train_mean) / train_std
-X_test_scaled = (X_test - train_mean) / train_std
-
-# 5. Train SVM model
-model = SVM_classifier(learning_rate=0.001, epochs=1000, lambda_parameter=0.01)
-model.fit(X_train_scaled, y_train)
-
-# 6. Make predictions
-y_pred_train = model.predict(X_train_scaled)
-y_pred_test = model.predict(X_test_scaled)
-
-# 7. Evaluate
-def calculate_accuracy(y_true, y_pred):
-    return np.sum(y_true == y_pred) / len(y_true)
-
-train_accuracy = calculate_accuracy(y_train, y_pred_train)
-test_accuracy = calculate_accuracy(y_test, y_pred_test)
-
-print(f"Training Accuracy: {train_accuracy * 100:.2f}%")
-print(f"Test Accuracy: {test_accuracy * 100:.2f}%")
-
-# 8. Confusion Matrix
-tp = np.sum((y_pred_test == 1) & (y_test == 1))
-fp = np.sum((y_pred_test == 1) & (y_test == 0))
-tn = np.sum((y_pred_test == 0) & (y_test == 0))
-fn = np.sum((y_pred_test == 0) & (y_test == 1))
-
-print(f"\nConfusion Matrix:")
-print(f"True Negatives (TN): {tn}")
-print(f"False Positives (FP): {fp}")
-print(f"False Negatives (FN): {fn}")
-print(f"True Positives (TP): {tp}")
-```
-
 ## 📁 Project Structure
 
 ```
@@ -410,9 +352,9 @@ A: SVM math requires -1/+1 for margin calculations. Dataset uses 0/1. We convert
 
 ## 👨‍💻 Author
 
-**Your Name**  
+SHaurya Rawat
 First-year Engineering Student | Machine Learning Enthusiast  
-GitHub: [Your GitHub Profile]
+
 
 ## 📄 License
 
@@ -443,4 +385,4 @@ Feel free to ask in GitHub Issues or reach out directly!
 
 Last Updated: November 21, 2025  
 Status: ✅ Complete and Working  
-Test Accuracy: ~85-89%
+Test Accuracy: ~95%
